@@ -109,6 +109,8 @@ RUN set -ex; \
   (cd /opt; ln -s solr-*/ solr); \
   rm -Rf /opt/solr/docs /opt/solr/docker/Dockerfile;
 
+  
+
 RUN set -ex; \
   mkdir -p /opt/solr/server/solr/lib /docker-entrypoint-initdb.d; \
   cp /opt/solr/bin/solr.in.sh /etc/default/solr.in.sh; \
@@ -117,8 +119,12 @@ RUN set -ex; \
   chmod 0664 /etc/default/solr.in.sh; \
   mkdir -p -m0770 /var/solr; \
   chown -R "$SOLR_USER:0" /var/solr; \
+  chown -R "$SOLR_USER:$SOLR_USER" /opt/solr; \
   test ! -e /opt/solr/modules || ln -s /opt/solr/modules /opt/solr/contrib; \
   test ! -e /opt/solr/prometheus-exporter || ln -s /opt/solr/prometheus-exporter /opt/solr/modules/prometheus-exporter;
+
+COPY ./script.sh /opt/solr
+RUN chmod +x /opt/solr/script.sh
 
 RUN set -ex; \
     apt-get update; \
@@ -128,7 +134,8 @@ RUN set -ex; \
 VOLUME /var/solr
 EXPOSE 8983
 WORKDIR /opt/solr
+
+
 USER $SOLR_UID
 
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["solr-foreground"]
+ENTRYPOINT ["/opt/solr/script.sh"]
