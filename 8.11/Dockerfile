@@ -118,13 +118,16 @@ RUN set -ex; \
 
 COPY --chown=0:0 scripts /opt/docker-solr/scripts
 
-COPY ./script.sh /opt/solr
-COPY ./basicauth.properties /opt/solr
-RUN chmod +x /opt/solr/script.sh
+COPY entrypoint.sh /opt/solr
+COPY metrics-exporter.sh /opt/solr
+COPY basicauth.properties /opt/solr
+RUN chmod +x /opt/solr/entrypoint.sh
+RUN chmod +x /opt/solr/metrics-exporter.sh
 
 VOLUME /var/solr
 EXPOSE 8983
 WORKDIR /opt/solr
+
 USER $SOLR_UID
 
-ENTRYPOINT ["/opt/solr/script.sh"]
+ENTRYPOINT ["/opt/solr/entrypoint.sh"]

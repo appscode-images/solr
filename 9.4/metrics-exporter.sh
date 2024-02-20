@@ -1,14 +1,10 @@
 #!/bin/bash
 
-set -eo pipefail
-set -x
-
 while true; do
     RESULT=$(curl -s -o /dev/null -I -w '%{http_code}' -u "${SOLR_USER}:${SOLR_PASSWORD}" http://${CLUSTER_NAME}.${POD_NAMESPACE}.svc.cluster.local:8983/solr/admin/cores?action=STATUS)
     if [ "$RESULT" -eq '200' ]; then
         break
     fi
-    sleep 1
 done
 
 if [[ "${SECURITY_ENABLED}" == "true" ]]; then
