@@ -121,8 +121,10 @@ RUN set -ex; \
   test ! -e /opt/solr/modules || ln -s /opt/solr/modules /opt/solr/contrib; \
   test ! -e /opt/solr/prometheus-exporter || ln -s /opt/solr/prometheus-exporter /opt/solr/modules/prometheus-exporter;
 
-COPY ./script.sh /opt/solr
-RUN chmod +x /opt/solr/script.sh
+COPY entrypoint.sh /opt/solr
+COPY metrics-exporter.sh /opt/solr
+RUN chmod +x /opt/solr/entrypoint.sh
+RUN chmod +x /opt/solr/metrics-exporter.sh
 
 RUN set -ex; \
     apt-get update; \
@@ -136,4 +138,4 @@ WORKDIR /opt/solr
 
 USER $SOLR_UID
 
-ENTRYPOINT ["/opt/solr/script.sh"]
+ENTRYPOINT ["/opt/solr/entrypoint.sh"]
