@@ -5,6 +5,7 @@ while true; do
     if [ "$RESULT" -eq '200' ]; then
         break
     fi
+    sleep 1
 done
 
 if [[ "${SECURITY_ENABLED}" == "true" ]]; then
