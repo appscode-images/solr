@@ -123,7 +123,7 @@ COPY basicauth.properties /opt/solr
 RUN chmod +x /opt/solr/entrypoint.sh
 RUN chmod +x /opt/solr/metrics-exporter.sh
 
-RUN chown -R $SOLR_USER:$SOLR_USER /opt/solr-8.11.3
+RUN chown -R $SOLR_USER:$SOLR_USER /opt/solr-8.11.2
 
 
 VOLUME /var/solr
