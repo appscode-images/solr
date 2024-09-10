@@ -1,6 +1,8 @@
 #!/bin/bash
 
-openssl pkcs12 -in /var/solr/etc/keystore.p12 -out /var/solr/ssl.pem -password pass:$SOLR_SSL_KEY_STORE_PASSWORD -nodes
+if [[ $SOLR_SSL_ENABLED == "true" ]]; then
+    openssl pkcs12 -in /var/solr/etc/keystore.p12 -out /var/solr/ssl.pem -password pass:$SOLR_SSL_KEY_STORE_PASSWORD -nodes
+fi
 while true; do
     RESULT="000"
     if [[ $SOLR_SSL_ENABLED == "true" ]]; then
