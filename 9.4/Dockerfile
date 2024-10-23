@@ -124,11 +124,15 @@ COPY entrypoint.sh /opt/solr
 COPY metrics-exporter.sh /opt/solr
 RUN chmod +x /opt/solr/entrypoint.sh
 RUN chmod +x /opt/solr/metrics-exporter.sh
+RUN chmod +x /opt/solr/server/scripts/cloud-scripts/zkcli.sh
 
 RUN set -ex; \
     apt-get update; \
     apt-get -y --no-install-recommends install acl lsof procps wget netcat gosu tini jattach; \
     rm -rf /var/lib/apt/lists/*;
+
+RUN chown -R $SOLR_USER:$SOLR_USER /opt/solr-9.4.1
+
 
 VOLUME /var/solr
 EXPOSE 8983
