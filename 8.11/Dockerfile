@@ -10,7 +10,7 @@ ARG SOLR_VERSION="8.11.2"
 ARG SOLR_SHA512="22fedcc0090eda72c3c5a5ea769c93adaf7d92c5c4479993f009ef0b9d42de5bd2ed1e0565ca01f3428587d8a3836286aa3017aab157050f2bd5bc3482fdebaa"
 ARG SOLR_KEYS="86EDB9C33B8517228E88A8F93E48C0C6EF362B9E"
 # If specified, this will override SOLR_DOWNLOAD_SERVER and all ASF mirrors. Typically used downstream for custom builds
-ARG SOLR_DOWNLOAD_URL=https://downloads.apache.org/lucene/solr/$SOLR_VERSION/solr-$SOLR_VERSION.tgz
+ARG SOLR_DOWNLOAD_URL
 
 # Override the solr download location with e.g.:
 #   docker build -t mine --build-arg SOLR_DOWNLOAD_SERVER=http://www-eu.apache.org/dist/lucene/solr .
