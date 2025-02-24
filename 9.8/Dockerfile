@@ -120,6 +120,11 @@ RUN set -ex; \
   test ! -e /opt/solr/modules || ln -s /opt/solr/modules /opt/solr/contrib; \
   test ! -e /opt/solr/prometheus-exporter || ln -s /opt/solr/prometheus-exporter /opt/solr/modules/prometheus-exporter;
 
+COPY entrypoint.sh /opt/solr
+COPY metrics-exporter.sh /opt/solr
+RUN chmod +x /opt/solr/entrypoint.sh
+RUN chmod +x /opt/solr/metrics-exporter.sh
+
 RUN set -ex; \
     apt-get update; \
     apt-get -y --no-install-recommends install acl lsof procps wget netcat gosu tini jattach; \
@@ -130,5 +135,4 @@ EXPOSE 8983
 WORKDIR /opt/solr
 USER $SOLR_UID
 
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["solr-foreground"]
+ENTRYPOINT ["/opt/solr/entrypoint.sh"]
